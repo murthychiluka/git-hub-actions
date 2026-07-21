@@ -1,9 +1,8 @@
 name: Terraform Deploy
+
 on:
-  #push:
-    #branches: [main]
-  workflow_dispatch:   # ✅ Manual trigger only
-   inputs:
+  workflow_dispatch:
+    inputs:
       action:
         description: "Choose Terraform action"
         required: true
@@ -13,14 +12,16 @@ on:
           - destroy
 
 permissions:
-  id-token: write   # required to request the OIDC token
-  contents: read    # required for actions/checkout
+  id-token: write
+  contents: read
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
+
     env:
-      AWS_REGION: us-east-1   # or ${{ secrets.AWS_REGION }} if you prefer to keep it as a secret
+      AWS_REGION: us-east-1
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
