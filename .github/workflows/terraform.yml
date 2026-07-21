@@ -52,6 +52,6 @@ jobs:
         if: github.event.inputs.action == 'destroy'
         run: terraform destroy -auto-approve
         
-       - name: Show Repository
-  run: |
-    echo "${{ github.repository }}"
+      - name: Show Repository
+        run: |
+         echo "${{ github.repository }}"
