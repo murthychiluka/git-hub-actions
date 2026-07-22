@@ -1,15 +1,15 @@
-name: Terraform Deploy
+name: OIDC Test
 
 on:
   workflow_dispatch:
-    inputs:
-      action:
-        description: "Choose Terraform action"
-        required: true
-        type: choice
-        options:
-          - apply
-          - destroy
+    # inputs:
+      # action:
+      #   description: "Choose Terraform action"
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - apply
+      #     - destroy
 
 permissions:
   id-token: write
@@ -31,25 +31,27 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
+        - name: Test aws credentials
+          run: aws sts get-caller-identity 
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
-        run: terraform init
+      # - name: Terraform Init
+      #   run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
+      # - name: Terraform Validate
+      #   run: terraform validate
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
+      # - name: Terraform Plan
+      #   run: terraform plan -out=tfplan
 
-      - name: Terraform Apply
-        if: github.event.inputs.action == 'apply'
-        run: terraform apply -auto-approve tfplan
+      # - name: Terraform Apply
+      #   if: github.event.inputs.action == 'apply'
+      #   run: terraform apply -auto-approve tfplan
 
-      - name: Terraform Destroy
-        if: github.event.inputs.action == 'destroy'
-        run: terraform destroy -auto-approve
+      # - name: Terraform Destroy
+      #   if: github.event.inputs.action == 'destroy'
+      #   run: terraform destroy -auto-approve
         
       
