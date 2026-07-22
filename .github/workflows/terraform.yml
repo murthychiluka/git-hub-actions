@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
+  oidc-test:
     runs-on: ubuntu-latest
 
     env:
@@ -31,8 +31,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
-        - name: Test aws credentials
-          run: aws sts get-caller-identity 
+      - name: Test aws credentials
+        run: aws sts get-caller-identity 
 
       # - name: Setup Terraform
       #   uses: hashicorp/setup-terraform@v3
