@@ -1,15 +1,8 @@
+
 name: OIDC Test
 
 on:
   workflow_dispatch:
-    # inputs:
-      # action:
-      #   description: "Choose Terraform action"
-      #   required: true
-      #   type: choice
-      #   options:
-      #     - apply
-      #     - destroy
 
 permissions:
   id-token: write
@@ -26,32 +19,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Show GitHub branch
+        run: |
+          echo "Branch: ${{ github.ref }}"
+          echo "Repository: ${{ github.repository }}"
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::287870619366:role/oidc-role-murthy
           aws-region: ${{ env.AWS_REGION }}
+
       - name: Test AWS credentials
-        run: aws sts get-caller-identity 
-
-      # - name: Setup Terraform
-      #   uses: hashicorp/setup-terraform@v3
-
-      # - name: Terraform Init
-      #   run: terraform init
-
-      # - name: Terraform Validate
-      #   run: terraform validate
-
-      # - name: Terraform Plan
-      #   run: terraform plan -out=tfplan
-
-      # - name: Terraform Apply
-      #   if: github.event.inputs.action == 'apply'
-      #   run: terraform apply -auto-approve tfplan
-
-      # - name: Terraform Destroy
-      #   if: github.event.inputs.action == 'destroy'
-      #   run: terraform destroy -auto-approve
-        
-      
+        run: aws sts get-caller-identity  
