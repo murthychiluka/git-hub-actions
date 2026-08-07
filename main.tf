@@ -1,10 +1,4 @@
-provider "aws" {
-}
-
-resource "aws_instance" "dev" {
-    ami = "ami-0cca150d127c2216f"
-    instance_type = "t3.micro"
-    tags = {
-      Name = "murty"
-    }
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket = "murthy-murthy1"
+  region = "us-east-1" 
 }
